@@ -14,7 +14,7 @@
       <div class="mb-3">
         <label class="form-label">nama</label>
         <input type="text" class="form-control" name="username"
-          placeholder="Enter your username" autofocus required />
+          placeholder="Masukkan nama anda" autofocus required />
       </div>
       <div class="mb-3 form-password-toggle">
         <div class="d-flex justify-content-between">
@@ -22,8 +22,7 @@
         </div>
         <div class="input-group input-group-merge">
           <input type="nomor_lisensi" class="form-control" name="nomor_lisensi"
-            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-            aria-describedby="password" />
+            placeholder="Masukkan nomor lisensi" />
           <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
         </div>
       </div>
