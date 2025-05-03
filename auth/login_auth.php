@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {  
         $row = $result->fetch_assoc();  
         // Verifikasi password  
-        if (password_verify($, $row["nomor_lisensi"])) {  
+        if (password_verify($password, $row["nomor_lisensi"])) {  
             $_SESSION["nama"] = $nama;  
             $_SESSION["nomor_lisensi"] = $row["nomor_lisensi"];    
             $_SESSION["pelanggan_id"] = $row["pelanggan_id"];  
