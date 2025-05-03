@@ -5,24 +5,25 @@
     <!-- Logo -->
     <div class="app-brand justify-content-center">
       <a href="index.html" class="app-brand-link gap-2">
-        <span class="app-brand-text demo text-uppercase fw-bolder">Vehicle rental</span>
+        <span class="app-brand-text demo text-uppercase fw-bolder">IdeKreatif</span>
       </a>
     </div>
     <!-- /Logo -->
-    <h4 class="mb-2">Selamat datang di Vehicle rental! 👋</h4>
-    <form class="mb-3" action="login_auth.php" method="POST"> 
+    <h4 class="mb-2">Selamat datang di IdeKreatif! 👋</h4>
+    <form class="mb-3" action="login_auth.php" method="POST">
       <div class="mb-3">
-        <label class="form-label">nama</label>
+        <label class="form-label">Username</label>
         <input type="text" class="form-control" name="username"
-          placeholder="Masukkan nama anda" autofocus required />
+          placeholder="Enter your username" autofocus required />
       </div>
       <div class="mb-3 form-password-toggle">
         <div class="d-flex justify-content-between">
-          <label class="form-label" for="nomor_lisensi">nomor lisensi</label>
+          <label class="form-label" for="password">Password</label>
         </div>
         <div class="input-group input-group-merge">
-          <input type="nomor_lisensi" class="form-control" name="nomor_lisensi"
-            placeholder="Masukkan nomor lisensi" />
+          <input type="password" class="form-control" name="password"
+            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+            aria-describedby="password" />
           <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
         </div>
       </div>

@@ -4,17 +4,17 @@ require_once("../config.php");
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama = $_POST["nama"];
-    $nama_user = $_POST["nama_user"];
-    $nomor_lisensi = $_POST["nomor_lisensi"];
-    $hashedPassword = password_hash($nomor_lisensi, PASSWORD_DEFAULT);
+    $username = $_POST["username"];
+    $name = $_POST["name"];
+    $password = $_POST["password"];
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO pelanggan (nama, nama_user, nomor_lisensi) 
-            VALUES ('$nama', '$nama_user', '$hashedPassword')";
+    $sql = "INSERT INTO users (username, name, password) 
+            VALUES ('$username', '$name', '$hashedPassword')";
     
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($sql) === TRUE) { 
         // Simpan notifikasi ke dalam session
-        $_SESSION['notification'] = [ 
+        $_SESSION['notification'] = [
             'type' => 'primary',
             'message' => 'Registrasi Berhasil!'
         ];

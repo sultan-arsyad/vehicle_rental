@@ -3,20 +3,20 @@ session_start();
 require_once("../config.php");  
   
 if ($_SERVER["REQUEST_METHOD"] == "POST") {  
-    $nama = $_POST["nama"];  
-    $nomor_lisensi = $_POST["nomor_lisensi"];  
+    $username = $_POST["username"];  
+    $password = $_POST["password"];  
   
-    $sql = "SELECT * FROM pelanggan WHERE nama ='$nama'";  
+    $sql = "SELECT * FROM users WHERE username='$username'";  
     $result = $conn->query($sql);  
   
     if ($result->num_rows > 0) {  
         $row = $result->fetch_assoc();  
         // Verifikasi password  
-        if (password_verify($password, $row["nomor_lisensi"])) {  
-            $_SESSION["nama"] = $nama;  
-            $_SESSION["nomor_lisensi"] = $row["nomor_lisensi"]; 
-            $_SESSION["role"] = $row["role"];    
-            $_SESSION["pelanggan_id"] = $row["pelanggan_id"];  
+        if (password_verify($password, $row["password"])) {  
+            $_SESSION["username"] = $username;  
+            $_SESSION["name"] = $row["name"];  
+            $_SESSION["role"] = $row["role"]; 
+            $_SESSION["user_id"] = $row["user_id"];  
             // Set notifikasi selamat datang  
             $_SESSION['notification'] = [  
                 'type' => 'primary',  
