@@ -9,10 +9,10 @@ include '.includes/toast_notification.php';
     <!-- Tabel data kategori -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h4>Data Kategori</h4>
+            <h4>Data Kendaraan</h4>
             <!-- Tombol untuk menambah kategori baru -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategory">
-                Tambah Kategori
+                Tambah Data Kendaraan
             </button>
         </div>
 <div class="card-body">
@@ -21,7 +21,7 @@ include '.includes/toast_notification.php';
 <thead>
 <tr class="text-center">
 <th width="50px">#</th>
-<th>Nama</th>
+<th>Model Kendaraan Anda</th>
 <th width="150px">Pilihan</th>
 </tr>
 </thead>
@@ -31,15 +31,15 @@ include '.includes/toast_notification.php';
 <!-- Mengambil data kategori dari database -->
 <?php
 $index = 1;
-$query = "SELECT * FROM category";
+$query = "SELECT * FROM kendaraan";
 $exec = mysqli_query($conn, $query); // Pastikan $conn sudah didefinisikan (koneksi database)
 
-while ($category = mysqli_fetch_assoc($exec)): 
+while ($kendaraan = mysqli_fetch_assoc($exec)): 
 ?>
     <tr>
         <!-- menampilkan nomor kategori, dan opsi -->
         <td><?= $index++; ?></td>
-         <td><?= $category['category_name']; ?></td> 
+         <td><?= $kendaraan['model']; ?></td> 
 
          <td>
             <!-- dropdown untuk opsi edit dan delete -->
@@ -49,10 +49,10 @@ while ($category = mysqli_fetch_assoc($exec)):
                  </button>
                 <div class="dropdown-menu">
                     <a href="#" class="dropdown-item" data-bs-toggle="modal"
-                     data-bs-target="#editCategory_<?= $category['category_id']; ?>">
+                     data-bs-target="#editCategory_<?= $kendaraan['kendaraan_id']; ?>">
                         <i class="bx bx-edit-alt me-2"></i> Edit
                     </a>
-                    <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteCategory_<?= $category['category_id']; ?>">
+                    <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletekendaraan_<?= $kendaraan['kendaraan_id']; ?>">
                         <i class="bx bx-trash me-2"></i> Delete</a>
                 </div>
             </div>
@@ -60,18 +60,18 @@ while ($category = mysqli_fetch_assoc($exec)):
 
     </tr>
 <!-- modal untuk hapus data kategori -->
-<div class="modal fade" id="deleteCategory_<?= $category['category_id']; ?>" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="deletekendaraan_<?= $kendaraan['kendaraan_id']; ?>" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Hapus Kategori?</h5>
+                <h5 class="modal-title">Hapus model kendaraan?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form action="proses_kategori.php" method="POST">
                     <div>
                         <p>Tindakan ini tidak bisa dibatalkan.</p>
-                        <input type="hidden" name="catID" value="<?= $category['category_id']; ?>">
+                        <input type="hidden" name="catID" value="<?= $kendaraan['kendaraan_id']; ?>">
                     </div>
             </div>
             <div class="modal-footer">
@@ -83,19 +83,19 @@ while ($category = mysqli_fetch_assoc($exec)):
     </div>
 </div>
  <!-- modal untuk update kategory -->
- <div id="editCategory_<?= $category['category_id']; ?>" class="modal fade" tabindex="-1" aria-hidden="true">
+ <div id="editkendaraan_<?= $kendaraan['kendaraan_id']; ?>" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Update Data Kategori</h5>
+                <h5 class="modal-title">Update model kendaraan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form action="proses_kategori.php" method="POST">
-                    <input type="hidden" name="catID" value="<?= $category['category_id']; ?>">
+                    <input type="hidden" name="catID" value="<?= $kendaraan['kendaraan_id']; ?>">
                     <div class="form-group">
-                        <label>Nama Kategori</label>
-                        <input type="text" value="<?= $category['category_name']; ?>" name="category_name" class="form-control">
+                        <label>Model kendaraan</label>
+                        <input type="text" value="<?= $kendaraan['model']; ?>" name="model" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -106,6 +106,31 @@ while ($category = mysqli_fetch_assoc($exec)):
             </div>
         </div>
     </div>    
+</div>
+<!-- Toggle Buttons untuk Memilih Tipe Kendaraan -->
+<div class="mb-3">
+    <label class="form-label d-block">Pilih Tipe Kendaraan</label>
+    <div class="btn-group" role="group" aria-label="Tipe Kendaraan">
+        <input type="radio" class="btn-check" name="tipe_kendaraan" id="pesawat" value="Pesawat" required>
+        <label class="btn btn-outline-primary" for="pesawat">Pesawat</label>
+
+        <input type="radio" class="btn-check" name="tipe" id="mobil" value="Mobil">
+        <label class="btn btn-outline-primary" for="mobil">Mobil</label>
+
+        <input type="radio" class="btn-check" name="tipe" id="motor" value="Motor">
+        <label class="btn btn-outline-primary" for="motor">Motor</label>
+
+        <input type="radio" class="btn-check" name="tipe" id="motor_listrik" value="Motor Listrik">
+        <label class="btn btn-outline-primary" for="motor_listrik">Motor Listrik</label>
+
+        <input type="radio" class="btn-check" name="tipe" id="mobil_listrik" value="Mobil Listrik">
+        <label class="btn btn-outline-primary" for="mobil_listrik">Mobil Listrik</label>
+
+        <input type="radio" class="btn-check" name="tipe" id="sepeda_listrik" value="Sepeda Listrik">
+        <label class="btn btn-outline-primary" for="sepeda_listrik">Sepeda Listrik</label>
+    </div>
+</div>
+
 </div>
 
 <?php endwhile; ?>
@@ -128,8 +153,8 @@ while ($category = mysqli_fetch_assoc($exec)):
             <div class="modal-body">
                 <form action="proses_kategori.php" method="POST">
                     <div class="mb-3">
-                        <label for="namakategori" class="form-label">Nama Kategori</label>
-                        <input type="text" class="form-control" name="category_name" required>
+                        <label for="namakendaraan" class="form-label">Model Kendaraan</label>
+                        <input type="text" class="form-control" name="model" required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>

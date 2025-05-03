@@ -10,27 +10,78 @@ include '.includes/header.php';
             <div class="card mb-4">
                 <div class="card-body">
                     <form method="POST" action="proses_post.php" enctype="multipart/form-data">
-                        <!-- Input untuk judul postingan -->
-                        <div class="mb-3">
-                            <label for="post_title" class="form-label">Judul Postingan</label>
-                            <input type="text" class="form-control" name="post_title" required>
-                        </div>
-                        <!-- Input untuk mengunggah gambar -->
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Unggah Gambar</label>
-                            <input class="form-control" type="file" name="image" accept="image/*" />
-                        </div>
+                    <?php
+// Misalnya dari database atau input sebelumnya
+$harga_per_hari = 100000;
+$tgl_rental = date('Y-m-d');
+$tgl_kembali = date('Y-m-d', strtotime('+3 days'));
+?>
+<form action="proses_rental.php" method="POST">
+    <!-- Harga per Hari (sembunyikan di input hidden) -->
+    <input type="hidden" id="harga_per_hari" value="<?= $harga_per_hari; ?>">
+
+    <!-- Tanggal Rental -->
+    <div class="mb-3">
+        <label for="tgl_rental" class="form-label">Tanggal Rental</label>
+        <input type="date" class="form-control" id="tgl_rental" name="tgl_rental" value="<?= $tgl_rental; ?>" required onchange="hitungTotal()">
+    </div>
+
+    <!-- Tanggal Kembali -->
+    <div class="mb-3">
+        <label for="tgl_kembali" class="form-label">Tanggal Kembali</label>
+        <input type="date" class="form-control" id="tgl_kembali" name="tgl_kembali" value="<?= $tgl_kembali; ?>" required onchange="hitungTotal()">
+    </div>
+
+    <!-- Total Harga -->
+    <div class="mb-3">
+        <label for="total" class="form-label">Total Harga</label>
+        <input type="text" class="form-control" id="total_harga_display" readonly>
+        <!-- Input sebenarnya dikirim ke server -->
+        <input type="hidden" name="total_harga" id="total_harga">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sewa Sekarang</button>
+</form>
+
+<script>
+function hitungTotal() {
+    const tglRental = new Date(document.getElementById("tgl_rental").value);
+    const tglKembali = new Date(document.getElementById("tgl_kembali").value);
+    const hargaPerHari = parseInt(document.getElementById("harga_per_hari").value);
+
+    if (tglRental && tglKembali && tglKembali >= tglRental) {
+        const selisihHari = Math.ceil((tglKembali - tglRental) / (1000 * 60 * 60 * 24));
+        const total = hargaPerHari * selisihHari;
+
+        document.getElementById("total_harga").value = total;
+        document.getElementById("total_harga_display").value = formatRupiah(total);
+    } else {
+        document.getElementById("total_harga").value = '';
+        document.getElementById("total_harga_display").value = '';
+    }
+}
+
+// Format angka ke format rupiah
+function formatRupiah(angka) {
+    return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+// Hitung saat halaman pertama kali dimuat
+window.onload = hitungTotal;
+</script>
+
+
                         <!-- Dropdown untuk memilih kategori -->
                         <div class="mb-3">
-                            <label for="category_id" class="form-label">Kategori</label>
-                            <select class="form-select" name="category_id" required>
+                            <label for="Kendaraan_id" class="form-label">Kendaraan</label>
+                            <select class="form-select" name="kendaraan_id" required>
                                 <option value="" selected disabled>Pilih salah satu</option>
              <?php
-                                $query = "SELECT * FROM category"; // Query untuk mengambil data kategori
+                                $query = "SELECT * FROM kendaraan"; // Query untuk mengambil data kategori
                                 $result = $conn->query($query); // Menjalankan query
                                 if ($result->num_rows > 0) { // Jika terdapat data kategori
                                     while ($row = $result->fetch_assoc()) { // Iterasi setiap kategori
-                                        echo "<option value='" . $row["category_id"] . "'>" . $row["category_name"] . "</option>";
+                                        echo "<option value='" . $row["kendaraan_id"] . "'>" . $row["model"] . "</option>";
                                     }
                                 }
                                 ?>

@@ -6,124 +6,75 @@ include 'config.php';
 session_start();
 
 // Mendapatkan ID pengguna dari sesi
-$userId = $_SESSION["user_id"];
+$pelangganId= $_SESSION["pelanggan_id"];
 
-// Menangani form untuk menambahkan postingan baru
-if (isset($_POST['simpan'])) {
-    // Mendapatkan data dari form
-    $postTitle = $_POST["post_title"]; // Judul postingan
-    $content = $_POST["content"]; // Konten postingan
-    $categoryId = $_POST["category_id"]; // ID kategori
+// Cek apakah form disubmit
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Ambil data dari form
+  $tgl_rental = $_POST['tgl_rental'];
+  $tgl_kembali = $_POST['tgl_kembali'];
+  $total = str_replace('.', '', $_POST['total']); // Bersihkan format ribuan jika ada
 
-    // Mengatur direktori penyimpanan file gambar
-    $imageDir = "assets/img/uploads/";
-    $imageName = $_FILES["image"]["name"]; // Nama file gambar
-    $imagePath = $imageDir . basename($imageName); // Path lengkap gambar
+  // Simulasi data login/session
+  $pelangganId = 1;      // Ubah sesuai session login
+  $kendaraan_id = 1;      // Ubah sesuai input/dropdown kendaraan
 
-    // Memindahkan file gambar yang diunggah ke direktori tujuan
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
-        // Jika unggahan berhasil, masukkan
-        // data postingan ke dalam database
-        $query = "INSERT INTO posts (post_title, content, created_at, category_id, user_id, image_path) VALUES ('$postTitle', '$content', NOW(), $categoryId, $userId, '$imagePath')";
-        if ($conn->query($query) === TRUE) {
-            $_SESSION['notification'] = [
-                'type' => 'primary',
-                'message' => 'Post succesfully added.'
-            ];
-        } else {
-            $_SESSION['notification'] = [
-                'type' => 'danger',
-                'message' => 'Error adding post: ' . $conn->error
-            ];
-        }
-    } else {
-        $_SESSION['notification'] = [
-            'type' => 'danger',
-            'message' => 'Failed to upload image.'
-        ];
-    }
+  // Simpan ke database
+  $query = "INSERT INTO rental (pelanggan_id, kendaraan_id, tgl_rental, tgl_kembali, total)
+            VALUES ('$pelangganId', '$kendaraan_id', '$tgl_rental', '$tgl_kembali', '$total')";
 
-    header('Location: dashboard.php');
-    exit();
-}
-// Proses penghapusan postingan
-
-    if (isset($_POST['delete'])) {
-
-        // Mengambil ID post dari parameter URL
-
-        $postID = $_POST['postID'];
-
-        // Query untuk menghapus post berdasarkan ID
-        $exec = mysqli_query($conn, "DELETE FROM posts WHERE id_post='$postID'");
-
-        // Menyimpan notifikasi keberhasilan atau kegagalan ke dalam session
-        if ($exec) {
-            $_SESSION['notification'] = [
-                'message' => 'Post successfully deleted.',
-                'type' => 'primary',
-            ];
-        } else {
-            $_SESSION['notification'] = [
-                'message' => 'Error deleting post: ' . mysqli_error($conn),
-                'type' => 'danger',
-            ];
-        }
-
-        // Redirect kembali ke halaman dashboard
-        header('Location: dashboard.php');
-        exit();
-    }
-// Mengangani pembaruan data postingan
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['update'])) {
-  // Mendapatkan data dari form
-  $postId = $_POST['post_id'];
-  $postTitle = $_POST['post_title'];
-  $content = $_POST['content'];
-  $categoryId = $_POST['category_id'];
-  $imageDir = "assets/img/uploads/"; // Direktori penyimpanan gambar
-
-  // Periksa apakah file gambar baru diunggah
-  if (!empty($_FILES["image_path"]["name"])) {
-    $imageName = $_FILES["image_path"]["name"];
-    $imagePath = $imageDir . $imageName;
-
-    // Pindahkan file baru ke direktori tujuan
-    move_uploaded_file($_FILES["image_path"]["tmp_name"], $imagePath);
-
-    $SqlQueryOldImage = "SELECT image_path FROM posts WHERE id_post = $postId";
-    $resultOldImage =  conn::query($SqlQueryOldImage);
-    if ($resultOldImage->num_rows > 0) {
-      $soldImage = $resultOldImage->fetch_assoc()['image_path'];
-      if (file_exists($soldImage)) {
-        unlink($soldImage); // Menghapus file lama
-      }
-    }
+  if (mysqli_query($conn, $query)) {
+      // Jika berhasil, redirect atau tampilkan notifikasi
+      echo "<script>alert('Data rental berhasil disimpan!'); window.location.href='dashboard.php';</script>";
   } else {
-    // Jika tidak ada file baru, gunakan gambar lama
-    $SqlQueryPath = "SELECT image_path FROM posts WHERE id_post = '$postId'";
-    $result = conn::query($SqlQueryPath);
-    $imagePath = ($result->num_rows > 0) ? $result->fetch_assoc()['image_path'] : null;
+      echo "Gagal menyimpan data: " . mysqli_error($conn);
   }
-
-  // Update data postingan di database
-  $queryUpdate = "UPDATE posts SET post_title = '$postTitle', content = '$content', category_id = '$categoryId', image_path = '$imagePath' WHERE id_post = '$postId'";
-  $conn->query($queryUpdate);
-
-  if ($conn->query($queryUpdate) === TRUE) {
-    // Session notifikasi
-    $_SESSION['notification'] = [
-      'type' => 'primary',
-      'message' => 'Postingkan berhasil diperbarui.'
-    ];
-  } else {
-    // Session notifikasi gagal
-  $_SESSION['notification'] = [
-    'type' => 'danger',
-    'massage' => 'gagal memperbarui postingan.'
-  ];
+} else {
+  echo "Akses tidak sah.";
 }
+
+if (isset($_POST['delete'])) {
+  // Ambil ID dari form
+  $rental_id = $_POST['postID'];
+
+  // Query delete
+  $query = "DELETE FROM rental WHERE rental_id = $rental_id";
+
+  if (mysqli_query($conn, $query)) {
+      echo "<script>alert('Data berhasil dihapus!'); window.location.href='dashboard.php';</script>";
+  } else {
+      echo "Gagal menghapus data: " . mysqli_error($conn);
+  }
+} else {
+  echo "Akses tidak sah.";
+}
+if (isset($_POST['update'])) {
+  // Ambil data dari form
+  $rental_id = $_POST['rental_id'];
+  $tgl_rental = $_POST['tgl_rental'];
+  $tgl_kembali = $_POST['tgl_kembali'];
+  $total_harga = str_replace('.', '', $_POST['total_harga']); // Hilangkan titik pada format rupiah
+
+  // (Opsional) Jika ingin bisa update pelanggan_id atau kendaraan_id juga
+  // $pelanggan_id = $_POST['pelanggan_id'];
+  // $kendaraan_id = $_POST['kendaraan_id'];
+
+  // Query update
+  $query = "UPDATE rental 
+            SET tgl_rental = '$tgl_rental', 
+                tgl_kembali = '$tgl_kembali', 
+                total_harga = '$total_harga'
+            WHERE rental_id = '$rental_id'";
+
+  if (mysqli_query($conn, $query)) {
+      echo "<script>alert('Data berhasil diupdate!'); window.location.href='dashboard.php';</script>";
+  } else {
+      echo "Gagal mengupdate data: " . mysqli_error($conn);
+  }
+} else {
+  echo "Akses tidak sah.";
+}
+
 //arahkan ke halaman dashboard
 header ('Location: dashboard.php');
 exit();
-}

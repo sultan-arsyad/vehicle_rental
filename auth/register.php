@@ -11,9 +11,13 @@
     </div>
     <!-- /Logo -->
     <form action="register_process.php" class="mb-3" method="POST">
-      <div class="mb-3">
+      <div class="mb-3"> 
         <label for="username" class="form-label">Nama</label>
         <input type="text" class="form-control" name="username" placeholder="Masukkan Nama" autofocus/>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Nama User</label>
+        <input type="text" class="form-control" name="name" placeholder="Masukkan Nama" />
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Nomor Lisensi</label>

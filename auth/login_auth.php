@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verifikasi password  
         if (password_verify($password, $row["nomor_lisensi"])) {  
             $_SESSION["nama"] = $nama;  
-            $_SESSION["nomor_lisensi"] = $row["nomor_lisensi"];    
+            $_SESSION["nomor_lisensi"] = $row["nomor_lisensi"]; 
+            $_SESSION["role"] = $row["role"];    
             $_SESSION["pelanggan_id"] = $row["pelanggan_id"];  
             // Set notifikasi selamat datang  
             $_SESSION['notification'] = [  

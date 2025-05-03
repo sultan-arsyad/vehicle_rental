@@ -10,7 +10,7 @@
     </div>
     <!-- /Logo -->
     <h4 class="mb-2">Selamat datang di Vehicle rental! 👋</h4>
-    <form class="mb-3" action="login_auth.php" method="POST">
+    <form class="mb-3" action="login_auth.php" method="POST"> 
       <div class="mb-3">
         <label class="form-label">nama</label>
         <input type="text" class="form-control" name="username"
@@ -18,7 +18,7 @@
       </div>
       <div class="mb-3 form-password-toggle">
         <div class="d-flex justify-content-between">
-          <label class="form-label" for="nomor_lisensi">nomor_lisensi</label>
+          <label class="form-label" for="nomor_lisensi">nomor lisensi</label>
         </div>
         <div class="input-group input-group-merge">
           <input type="nomor_lisensi" class="form-control" name="nomor_lisensi"

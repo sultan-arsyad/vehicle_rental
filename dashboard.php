@@ -22,9 +22,11 @@ include ".includes/toast_notification.php";
                         <thead>
                             <tr class="text-center">
                                 <th width="50px">#</th>
-                                <th>Tipe Kendaraan</th>
-                                <th>Ketersediaan</th>
-                                <th>Tanggal kembali</th>
+                                <th>Tanggal Rental</th>
+                                <th>Nama User</th>
+                                <th>Tipe</th>
+                                <th>Tanggal Kembali</th>
+                                <th>Total Harga</th>
                                 <th width="150px">Pilihan</th>
                             </tr>
                         </thead>
@@ -33,7 +35,7 @@ include ".includes/toast_notification.php";
                             <?php
                             $index = 1; // Variabel untuk nomor urut
                             // Query untuk mengambil data dari tabel posts, users, dan category
-                            $query = "SELECT rental.*, kendaraan.tipe as tipe_kendaraan, pelanggan.nomor_lisensi 
+                            $query = "SELECT rental.*, kendaraan.tipe ,pelanggan.nama_user 
                                       FROM rental 
                                       INNER JOIN  pelanggan ON rental.pelanggan_id = pelanggan.pelanggan_id 
                                       LEFT JOIN  kendaraan ON rental.kendaraan_id = kendaraan.kendaraan_id 
@@ -47,9 +49,11 @@ include ".includes/toast_notification.php";
                             ?>
                                 <tr>
                                     <td><?= $index++; ?></td>
+                                    <td><?= $post['tgl_rental']; ?></td>
+                                    <td><?= $post['nama_user']; ?></td>
                                     <td><?= $post['tipe']; ?></td>
-                                    <td><?= $post['nomor_lisensi']; ?></td>
-                                    <td><?= $post['total']; ?></td>
+                                    <td><?= $post['tgl_kembali']; ?></td>
+                                    <td><?= $post['Total']; ?></td>
                                     <td>
                                         <div class="dropdown">
                                             <!-- Tombol dropdown untuk Pilihan -->
@@ -58,11 +62,11 @@ include ".includes/toast_notification.php";
                                             </button>
                                             <div class="dropdown-menu">
                                                 <!-- Pilihan Edit -->
-                                                <a href="edit_post.php?post_id=<?= $post['id_rental']; ?>" class="dropdown-item">
+                                                <a href="edit_post.php?post_id=<?= $post['rental_id']; ?>" class="dropdown-item">
                                                     <i class="bx bx-edit-alt me-2"></i> Edit
                                                 </a>
                                                 <!-- Pilihan Delete -->
-                                                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletePost_<?= $post['id_post']; ?>">
+                                                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletePost_<?= $post['rental_id']; ?>">
                                                     <i class="bx bx-trash me-2"></i> Delete
                                                 </a>
                                             </div>
@@ -71,7 +75,7 @@ include ".includes/toast_notification.php";
                                 </tr>
 
                                 <!-- Modal untuk Hapus Konten Blog -->
-                     <div class="modal fade" id="deletePost_<?= $post['id_post']; ?>" tabindex="-1" aria-hidden="true">
+                     <div class="modal fade" id="deletePost_<?= $post['rental_id']; ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -81,7 +85,7 @@ include ".includes/toast_notification.php";
                                             <div class="modal-body">
                                                 <form action="proses_post.php" method="POST">
                                                     <p>Tindakan ini tidak bisa dibatalkan.</p>
-                                                    <input type="hidden" name="postID" value="<?= $post['id_post']; ?>">
+                                                    <input type="hidden" name="postID" value="<?= $post['rental_id']; ?>">
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
                                                         <button type="submit" name="delete" class="btn btn-primary">Hapus</button>
