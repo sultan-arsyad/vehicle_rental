@@ -35,9 +35,9 @@ include ".includes/toast_notification.php";
                             // Query untuk mengambil data dari tabel posts, users, dan category
                             $query = "SELECT rental.*, kendaraan.tipe as tipe_kendaraan, pelanggan.nomor_lisensi 
                                       FROM rental 
-                                      INNER JOIN kendaraan ON rental.kendaraan_id = kendaraan.kendaraan_id 
-                                      LEFT JOIN pelanggan ON rental.pelanggan_id = pelanggan.pelanggan_id 
-                                      WHERE posts.user_id = $userId";
+                                      INNER JOIN  pelanggan ON rental.pelanggan_id = pelanggan.pelanggan_id 
+                                      LEFT JOIN  kendaraan ON rental.kendaraan_id = kendaraan.kendaraan_id 
+                                      WHERE rental.pelanggan_id = $pelangganId";
 
                             // Eksekusi query
                             $exec = mysqli_query($conn, $query);
@@ -58,7 +58,7 @@ include ".includes/toast_notification.php";
                                             </button>
                                             <div class="dropdown-menu">
                                                 <!-- Pilihan Edit -->
-                                                <a href="edit_post.php?post_id=<?= $post['id_post']; ?>" class="dropdown-item">
+                                                <a href="edit_post.php?post_id=<?= $post['id_rental']; ?>" class="dropdown-item">
                                                     <i class="bx bx-edit-alt me-2"></i> Edit
                                                 </a>
                                                 <!-- Pilihan Delete -->
