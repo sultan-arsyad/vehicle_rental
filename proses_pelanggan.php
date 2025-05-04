@@ -1,95 +1,99 @@
 <?php
-// Menghubungkan file konfigurasi database
 include 'config.php';
-
-// Memulai sesi PHP
 session_start();
 
-// Mendapatkan ID pengguna dari sesi
-$userId = $_SESSION["user_id"];
-
-// Menangani form untuk menambahkan postingan baru
 if (isset($_POST['simpan'])) {
-    // Mendapatkan data dari form
-    $nama = $_POST["nama"]; // Judul postingan
-    $nomorlisensi = $_POST["nomor_lisensi"]; // Konten postingan
+    $nama = $_POST["nama"];
+    $tipe = $_POST["tipe"];
+    $model = $_POST["model"];
+    $nomor_lisensi = $_POST["nomor_lisensi"];
+    $tanggal_rental = $_POST["tanggal_rental"];
+    $tanggal_kembali = $_POST["tanggal_kembali"];
+    $total = $_POST["total"];
 
-        // data postingan ke dalam database
-        $query = "INSERT INTO pelanggan (nama, nomor_lisensi) VALUES ('$nama', '$nomorlisensi')";
-        if ($conn->query($query) === TRUE) {
-            $_SESSION['notification'] = [
-                'type' => 'primary',
-                'message' => 'Post succesfully added.'
-            ];
+    // Simpan pelanggan
+    $queryPelanggan = "INSERT INTO pelanggan (nama, nomor_lisensi) VALUES ('$nama', '$nomor_lisensi')";
+    if ($conn->query($queryPelanggan) === TRUE) {
+        $pelanggan_id = $conn->insert_id;
+
+        // Simpan kendaraan
+        $queryKendaraan = "INSERT INTO kendaraan (tipe, model) VALUES ('$tipe', '$model')";
+        if ($conn->query($queryKendaraan) === TRUE) {
+            $kendaraan_id = $conn->insert_id;
+
+            // Simpan data rental
+            $queryRental = "INSERT INTO rental (rental_id, pelanggan_id, kendaraan_id, tgl_rental, tgl_kembali, total) 
+                            VALUES ('$rental_id','$pelanggan_id', '$kendaraan_id', '$tanggal_rental', '$tanggal_kembali', '$total')";
+
+            if ($conn->query($queryRental) === TRUE) {
+                $_SESSION['notification'] = [
+                    'type' => 'primary',
+                    'message' => 'Data berhasil ditambahkan.'
+                ];
+            } else {
+                $_SESSION['notification'] = [
+                    'type' => 'danger',
+                    'message' => 'Error menambahkan data rental: ' . $conn->error
+                ];
+            }
         } else {
             $_SESSION['notification'] = [
                 'type' => 'danger',
-                'message' => 'Error adding post: ' . $conn->error
+                'message' => 'Error menambahkan data kendaraan: ' . $conn->error
             ];
         }
     } else {
         $_SESSION['notification'] = [
             'type' => 'danger',
-            'message' => 'Failed to upload image.'
+            'message' => 'Error menambahkan data pelanggan: ' . $conn->error
         ];
     }
 
     header('Location: rental.php');
     exit();
+}
 
-// Proses penghapusan postingan
+// Proses penghapusan pelanggan
+if (isset($_POST['delete'])) {
+    $rentalID = $_POST['rental_id'];
 
-    if (isset($_POST['delete'])) {
-
-        // Mengambil ID post dari parameter URL
-
-        $pelangganID = $_POST['pelanggan_id'];
-
-        // Query untuk menghapus post berdasarkan ID
-        $exec = mysqli_query($conn, "DELETE FROM pelanggan WHERE pelanggan_id = '$pelangganID'");
-
-        // Menyimpan notifikasi keberhasilan atau kegagalan ke dalam session
-        if ($exec) {
-            $_SESSION['notification'] = [
-                'message' => 'Post successfully deleted.',
-                'type' => 'primary',
-            ];
-        } else {
-            $_SESSION['notification'] = [
-                'message' => 'Error deleting post: ' . mysqli_error($conn),
-                'type' => 'danger',
-            ];
-        }
-
-        // Redirect kembali ke halaman dashboard
-        header('Location: rental.php');
-        exit();
+    $exec = mysqli_query($conn, "DELETE FROM rental WHERE rental_id = '$pelangganID'");
+    if ($exec) {
+        $_SESSION['notification'] = [
+            'message' => 'Data pelanggan berhasil dihapus.',
+            'type' => 'primary',
+        ];
+    } else {
+        $_SESSION['notification'] = [
+            'message' => 'Error menghapus data pelanggan: ' . mysqli_error($conn),
+            'type' => 'danger',
+        ];
     }
-// Mengangani pembaruan data postingan
+
+    header('Location: rental.php');
+    exit();
+}
+
+// Proses pembaruan data pelanggan
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['update'])) {
-  // Mendapatkan data dari form
-  $pelangganID = $_POST['pelanggan_id'];
-  $nama = $_POST['nama'];
-  $nomorlisensi = $_POST['nomor_lisensi'];
+    $pelangganID = $_POST['pelanggan_id'];
+    $nama = $_POST['nama'];
+    $nomor_lisensi = $_POST['nomor_lisensi'];
 
-  // Update data postingan di database
-  $queryUpdate = "UPDATE pelanggan SET nama = '$nama', nomor_lisensi = '$nomorlisensi' WHERE pelanggan_id = '$pelangganID'";
-  $conn->query($queryUpdate);
+    $queryUpdate = "UPDATE pelanggan SET nama = '$nama', nomor_lisensi = '$nomor_lisensi' WHERE pelanggan_id = '$pelangganID'";
+    if ($conn->query($queryUpdate) === TRUE) {
+        $_SESSION['notification'] = [
+            'type' => 'primary',
+            'message' => 'Data pelanggan berhasil diperbarui.'
+        ];
+    } else {
+        $_SESSION['notification'] = [
+            'type' => 'danger',
+            'message' => 'Gagal memperbarui data pelanggan: ' . $conn->error
+        ];
+    }
 
-  if ($conn->query($queryUpdate) === TRUE) {
-    // Session notifikasi
-    $_SESSION['notification'] = [
-      'type' => 'primary',
-      'message' => 'Postingkan berhasil diperbarui.'
-    ];
-  } else {
-    // Session notifikasi gagal
-  $_SESSION['notification'] = [
-    'type' => 'danger',
-    'massage' => 'gagal memperbarui postingan.'
-  ];
+    header('Location: rental.php');
+    exit();
 }
-//arahkan ke halaman dashboard
-header ('Location: rental.php');
-exit();
-}
+?>

@@ -13,9 +13,15 @@ include '.includes/header.php';
 
                         <!-- Input untuk judul postingan -->
                         <div class="mb-3">
-                            <label for="post_title" class="form-label">Nama Pelanggan</label>
-                            <input type="text" class="form-control" name="post_title" required>
+                            <label for="nama" class="form-label">Nama Pelanggan</label>
+                            <input type="text" class="form-control" name="nama" required>
                         </div>
+                        <!--INput untuk nomor lisensi -->
+                        <div class="mb-3">
+    <label for="nomor_lisensi" class="form-label">Nomor Lisensi</label>
+    <input type="text" class="form-control" name="nomor_lisensi" id="nomor_lisensi" required>
+</div>
+
 
                         <!-- Dropdown untuk memilih tipe kendaraan -->
 <div class="mb-3">
