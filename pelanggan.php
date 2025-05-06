@@ -11,21 +11,28 @@ include '.includes/header.php';
                 <div class="card-body">
                     <form method="POST" action="proses_pelanggan.php" enctype="multipart/form-data">
 
-                        <!-- Input untuk judul postingan -->
-                        <div class="mb-3">
-                            <label for="post_title" class="form-label">Nama Pelanggan</label>
-                            <input type="text" class="form-control" name="post_title" required>
-                        </div>
+                            <!-- Input untuk nama pelanggan -->
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Pelanggan</label>
+                                <input type="text" class="form-control" name="nama" id="nama" required>
+                            </div>
+
+                            <!-- Input untuk nomor lisensi -->
+                            <div class="mb-3">
+                                <label for="nomor_lisensi" class="form-label">Nomor Lisensi</label>
+                                <input type="text" class="form-control" name="nomor_lisensi" id="nomor_lisensi" required>
+                            </div>
+
 
                         <!-- Dropdown untuk memilih tipe kendaraan -->
-<div class="mb-3">
-    <label for="tipe" class="form-label">Tipe Kendaraan</label>
-    <select class="form-select" id="tipe" name="tipe" onchange="filterModel()" required>
-        <option value="" selected disabled>Pilih Tipe</option>
-        <option value="Mobil">Mobil</option>
-        <option value="Motor">Motor</option>
-    </select>
-</div>
+                            <div class="mb-3">
+                                <label for="tipe" class="form-label">Tipe Kendaraan</label>
+                                <select class="form-select" id="tipe" name="tipe" onchange="filterModel()" required>
+                                    <option value="" selected disabled>Pilih Tipe</option>
+                                    <option value="Mobil">Mobil</option>
+                                    <option value="Motor">Motor</option>
+                                </select>
+                            </div>
 
 <!-- Dropdown untuk memilih model kendaraan berdasarkan tipe -->
 <div class="mb-3">
@@ -50,20 +57,20 @@ if ($result->num_rows > 0) {
 
 <!-- Tanggal Rental -->
 <div class="mb-3">
-    <label for="tanggal_rental" class="form-label">Tanggal Rental</label>
-    <input type="date" class="form-control" id="tanggal_rental" name="tanggal_rental" required>
+    <label for="tgl_rental" class="form-label">Tanggal Rental</label>
+    <input type="date" class="form-control" id="tgl_rental" name="tgl_rental" required>
 </div>
 
 <!-- Tanggal Kembali -->
 <div class="mb-3">
-    <label for="tanggal_kembali" class="form-label">Tanggal Kembali</label>
-    <input type="date" class="form-control" id="tanggal_kembali" name="tanggal_kembali" required>
+    <label for="tgl_kembali" class="form-label">Tanggal Kembali</label>
+    <input type="date" class="form-control" id="tgl_kembali" name="tgl_kembali" required>
 </div>
 
 <!-- Total Harga (Otomatis) -->
 <div class="mb-3">
-    <label for="total_harga" class="form-label">Total Harga</label>
-    <input type="text" class="form-control" id="total_harga" name="total_harga" readonly>
+    <label for="total" class="form-label">Total Harga</label>
+    <input type="text" class="form-control" id="total" name="total" readonly>
 </div>
 
 
@@ -124,30 +131,30 @@ function filterModel() {
 }
 
 document.getElementById("kendaraan_id").addEventListener("change", hitungTotalHarga);
-document.getElementById("tanggal_rental").addEventListener("change", hitungTotalHarga);
-document.getElementById("tanggal_kembali").addEventListener("change", hitungTotalHarga);
+document.getElementById("tgl_rental").addEventListener("change", hitungTotalHarga);
+document.getElementById("tgl_kembali").addEventListener("change", hitungTotalHarga);
 
 function hitungTotalHarga() {
     var kendaraanSelect = document.getElementById("kendaraan_id");
     var selectedOption = kendaraanSelect.options[kendaraanSelect.selectedIndex];
     var hargaPerHari = parseInt(selectedOption.getAttribute("data-harga"));
 
-    var tglRental = new Date(document.getElementById("tanggal_rental").value);
-    var tglKembali = new Date(document.getElementById("tanggal_kembali").value);
+    var tglRental = new Date(document.getElementById("tgl_rental").value);
+    var tglKembali = new Date(document.getElementById("tgl_kembali").value);
 
     if (isNaN(hargaPerHari) || isNaN(tglRental.getTime()) || isNaN(tglKembali.getTime())) {
-        document.getElementById("total_harga").value = "";
+        document.getElementById("total").value = "";
         return;
     }
 
     var selisihHari = Math.ceil((tglKembali - tglRental) / (1000 * 60 * 60 * 24));
 
     if (selisihHari < 1) {
-        document.getElementById("total_harga").value = "Tanggal tidak valid";
+        document.getElementById("total").value = "Tanggal tidak valid";
         return;
     }
 
     var total = selisihHari * hargaPerHari;
-    document.getElementById("total_harga").value = "Rp" + total.toLocaleString('id-ID');
+    document.getElementById("total").value = "Rp" + total.toLocaleString('id-ID');
 }
 </script>
