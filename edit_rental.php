@@ -10,7 +10,7 @@ if ($rentalId <= 0) {
 }
 
 // Ambil data rental
-$query = "SELECT rental.*, pelanggan.nama, pelanggan.nomor_lisensi, pelanggan.pelanggan_id, kendaraan.tipe, kendaraan.model 
+$query = "SELECT rental.*, pelanggan.nama, pelanggan.NIK, pelanggan.pelanggan_id, kendaraan.tipe, kendaraan.model 
           FROM rental
           JOIN pelanggan ON rental.pelanggan_id = pelanggan.pelanggan_id
           JOIN kendaraan ON rental.kendaraan_id = kendaraan.kendaraan_id
@@ -38,8 +38,8 @@ $rental = $result->fetch_assoc();
                 </div>
 
                 <div class="mb-3">
-                    <label for="nomor_lisensi" class="form-label">Nomor Lisensi</label>
-                    <input type="text" class="form-control" id="nomor_lisensi" name="nomor_lisensi" value="<?= htmlspecialchars($rental['nomor_lisensi']) ?>" required>
+                    <label for="NIK" class="form-label">NIK</label>
+                    <input type="text" class="form-control" id="NIK" name="NIK" value="<?= htmlspecialchars($rental['NIK']) ?>" required>
                 </div>
 
                 <div class="mb-3">

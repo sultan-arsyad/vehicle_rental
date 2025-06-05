@@ -7,10 +7,10 @@ $userId = $_SESSION["user_id"];
 if (isset($_POST['simpan'])) {
     // Ambil data pelanggan
     $nama = $_POST["nama"];
-    $nomorLisensi = $_POST["nomor_lisensi"];
+    $NIK = $_POST["NIK"];
 
     // Simpan ke tabel pelanggan
-    $queryPelanggan = "INSERT INTO pelanggan (nama, nomor_lisensi) VALUES ('$nama', '$nomorLisensi')";
+    $queryPelanggan = "INSERT INTO pelanggan (nama, NIK) VALUES ('$nama', '$nomorLisensi')";
 
     if ($conn->query($queryPelanggan) === TRUE) {
         // Ambil ID pelanggan yang baru saja ditambahkan

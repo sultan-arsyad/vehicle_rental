@@ -17,7 +17,7 @@ include('.includes/toast_notification.php');
               <th>#</th>
               <th>Nama Pelanggan</th>
               <th>Kendaraan</th>
-              <th>Nomor Lisensi</th>
+              <th>NIK</th>
               <th>Tanggal Rental</th>
               <th>Tanggal Kembali</th>
               <th>Total (Rp)</th>
@@ -31,7 +31,7 @@ include('.includes/toast_notification.php');
                              pelanggan.nama AS nama_pelanggan, 
                              kendaraan.tipe, 
                              kendaraan.model, 
-                             pelanggan.nomor_lisensi
+                             pelanggan.NIK
                       FROM rental
                       INNER JOIN pelanggan ON rental.pelanggan_id = pelanggan.pelanggan_id
                       INNER JOIN kendaraan ON rental.kendaraan_id = kendaraan.kendaraan_id";
@@ -49,7 +49,7 @@ include('.includes/toast_notification.php');
                   <td><?= $no++; ?></td>
                   <td><?= htmlspecialchars($rental['nama_pelanggan']); ?></td>
                   <td><?= htmlspecialchars($rental['tipe'] . ' - ' . $rental['model']); ?></td>
-                  <td><?= htmlspecialchars($rental['nomor_lisensi']); ?></td>
+                  <td><?= htmlspecialchars($rental['NIK']); ?></td>
                   <td><?= $rental['tgl_rental']; ?></td>
                   <td><?= $rental['tgl_kembali']; ?></td>
                   <td>Rp <?= number_format($rental['total'], 0, ',', '.'); ?></td>

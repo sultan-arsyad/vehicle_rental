@@ -28,12 +28,17 @@
       <ul class="menu-sub">
         <li class="menu-item">
           <a href="pelanggan.php" class="menu-link">
-            <div data-i18n="Basic Inputs">List Pelanggan</div>
+            <div data-i18n="Basic Inputs">Data Penyewaan</div>
           </a>
         </li>
         <li class="menu-item">
           <a href="kendaraan.php" class="menu-link">
             <div data-i18n="Input groups">List Kendaraan</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="pembeli.php" class="menu-link">
+            <div data-i18n="Basic Inputs">Data Pelanggan</div>
           </a>
         </li>
       </ul>

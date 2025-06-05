@@ -160,10 +160,14 @@ while ($tipe = mysqli_fetch_assoc($exec)):
     </form>
   </div>
 </div>
-    
 <?php endwhile; ?>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+</div>
+
 <?php include '.includes/footer.php'; ?>
 
 <!-- JavaScript untuk dinamis model -->
