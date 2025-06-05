@@ -40,3 +40,15 @@ include '.includes/header.php';
                     <?php
                     include '.includes/footer.php';
                     ?>
+
+                    <?php
+                    if (isset($_SESSION['notification'])) {
+                        $notif = $_SESSION['notification'];
+                        echo '
+                        <div class="alert alert-' . $notif['type'] . ' alert-dismissible fade show" role="alert">
+                            ' . $notif['message'] . '
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>';
+                        unset($_SESSION['notification']);
+                    }
+                    ?>

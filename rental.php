@@ -49,7 +49,7 @@ include('.includes/toast_notification.php');
                   <td><?= $no++; ?></td>
                   <td><?= htmlspecialchars($rental['nama_pelanggan']); ?></td>
                   <td><?= htmlspecialchars($rental['tipe'] . ' - ' . $rental['model']); ?></td>
-                  <td><?= htmlspecialchars($rental['NIK']); ?></td>
+                  <td><?= ($rental['NIK']); ?></td>
                   <td><?= $rental['tgl_rental']; ?></td>
                   <td><?= $rental['tgl_kembali']; ?></td>
                   <td>Rp <?= number_format($rental['total'], 0, ',', '.'); ?></td>
@@ -58,11 +58,8 @@ include('.includes/toast_notification.php');
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="edit_rental.php?rental_id=<?= $rental['rental_id']; ?>">
-                        <i class="bx bx-edit-alt me-1"></i> Edit
-                      </a>
-                      <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteRental_<?= $rental['rental_id']; ?>">
-                        <i class="bx bx-trash me-1"></i> Hapus
+                      <a class="dropdown-item" href="detail_rental.php?rental_id=<?= $rental['rental_id']; ?>">
+                        <i class="bx bx-show me-1"></i> Detail
                       </a>
                     </div>
 
