@@ -6,11 +6,11 @@
                   <script>
                     document.write(new Date().getFullYear());
                   </script>
-                  <a href="#" target="_blank" class="footer-link fw-bolder">SMKN 4 Tanjungpinang</a>.
-                  All rights reserved.
+                  <a href="#" target="_blank" class="footer-link fw-bolder">مملكة ستاربادز💫</a>.
+                  العرش الأعلى
                 </div>
                 <div>
-                  <a href="#" target="_blank" class="footer-link me-4">TIM RPL SMKN 4 Tanjungpinang</a>
+                  <a href="#" target="_blank" class="footer-link me-4">الرجل الأكثر وسامة في العالم </a>
                 </div>
               </div>
             </footer>
