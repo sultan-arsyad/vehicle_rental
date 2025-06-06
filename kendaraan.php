@@ -31,7 +31,7 @@ include '.includes/toast_notification.php';
             $exec = mysqli_query($conn, $query);
 
             while ($tipe = mysqli_fetch_assoc($exec)):
-            ?>
+              ?>
               <tr class="text-center">
                 <td><?= $index++; ?></td>
                 <td><?= $tipe['tipe']; ?></td>
@@ -43,10 +43,12 @@ include '.includes/toast_notification.php';
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editCategory_<?= $tipe['kendaraan_id']; ?>">
+                      <a href="#" class="dropdown-item" data-bs-toggle="modal"
+                        data-bs-target="#editCategory_<?= $tipe['kendaraan_id']; ?>">
                         <i class="bx bx-edit-alt me-2"></i> Edit
                       </a>
-                      <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteCategory_<?= $tipe['kendaraan_id']; ?>">
+                      <a href="#" class="dropdown-item" data-bs-toggle="modal"
+                        data-bs-target="#deleteCategory_<?= $tipe['kendaraan_id']; ?>">
                         <i class="bx bx-trash me-2"></i> Delete
                       </a>
                     </div>
@@ -80,13 +82,16 @@ include '.includes/toast_notification.php';
                         </div>
 
                         <div class="mb-3">
-  <label for="harga_per_hari" class="form-label">Harga per Hari</label>
-  <!-- Input yang user lihat dan edit -->
-  <input type="text" class="form-control format-harga" value="Rp<?= number_format($tipe['harga_per_hari'], 0, ',', '.'); ?>" placeholder="Rp0" required>
+                          <label for="harga_per_hari" class="form-label">Harga per Hari</label>
+                          <!-- Input yang user lihat dan edit -->
+                          <input type="text" class="form-control format-harga"
+                            value="Rp<?= number_format($tipe['harga_per_hari'], 0, ',', '.'); ?>" placeholder="Rp0"
+                            required>
 
-  <!-- Input tersembunyi untuk nilai numerik asli -->
-  <input type="hidden" name="harga_per_hari" class="harga-asli" value="<?= $tipe['harga_per_hari']; ?>">
-</div>
+                          <!-- Input tersembunyi untuk nilai numerik asli -->
+                          <input type="hidden" name="harga_per_hari" class="harga-asli"
+                            value="<?= $tipe['harga_per_hari']; ?>">
+                        </div>
 
                       </div>
                       <div class="modal-footer">
@@ -153,13 +158,14 @@ include '.includes/toast_notification.php';
           </div>
 
           <div class="mb-3">
-  <label for="harga_per_hari" class="form-label">Harga per Hari</label>
-  <!-- Input yang user lihat dan edit -->
-  <input type="text" class="form-control format-harga" value="Rp<?= number_format($tipe['harga_per_hari'], 0, ',', '.'); ?>" placeholder="Rp0" required>
+            <label for="harga_per_hari" class="form-label">Harga per Hari</label>
+            <!-- Input yang user lihat dan edit -->
+            <input type="text" class="form-control format-harga"
+              value="Rp<?= number_format($tipe['harga_per_hari'], 0, ',', '.'); ?>" placeholder="Rp0" required>
 
-  <!-- Input tersembunyi untuk nilai numerik asli -->
-  <input type="hidden" name="harga_per_hari" class="harga-asli" value="<?= $tipe['harga_per_hari']; ?>">
-</div>
+            <!-- Input tersembunyi untuk nilai numerik asli -->
+            <input type="hidden" name="harga_per_hari" class="harga-asli" value="<?= $tipe['harga_per_hari']; ?>">
+          </div>
 
         </div>
         <div class="modal-footer">

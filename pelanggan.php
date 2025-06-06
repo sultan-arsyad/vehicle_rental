@@ -18,45 +18,45 @@
                                 }
                                 ?>
                             </select>
-                            </div>
+                        </div>
 
-                          
-    <!-- Pilih Tipe Kendaraan -->
-<div class="mb-3">
-    <label for="tipe_kendaraan" class="form-label">Tipe Kendaraan</label>
-    <select class="form-select" id="tipe_kendaraan" name="tipe_kendaraan" required>
-        <option value="">Pilih Tipe</option>
-        <?php
-        $queryTipe = "SELECT DISTINCT tipe FROM kendaraan";
-        $resultTipe = $conn->query($queryTipe);
-        while ($row = $resultTipe->fetch_assoc()) {
-            $tipe = $row['tipe'];
-            echo "<option value='$tipe'>$tipe</option>";
-        }
-        ?>
-    </select>
-</div>
 
-<!-- Pilih Model Kendaraan -->
-<div class="mb-3">
-    <label for="kendaraan_id" class="form-label">Model Kendaraan</label>
-    <select class="form-select" id="kendaraan_id" name="kendaraan_id" required>
-        <option value="">Pilih Model</option>
-        <?php
-        $queryModel = "SELECT * FROM kendaraan";
-        $resultModel = $conn->query($queryModel);
-        while ($row = $resultModel->fetch_assoc()) {
-            $model = $row['model'];
-            $id = $row['kendaraan_id'];
-            $harga = $row['harga_per_hari'];
-            $tipe = $row['tipe']; // penting!
-            echo "<option value='$id' data-harga='$harga' data-tipe='$tipe'>$model</option>";
-        }
-        ?>
-    </select>
-</div>
+                        <!-- Pilih Tipe Kendaraan -->
+                        <div class="mb-3">
+                            <label for="tipe_kendaraan" class="form-label">Tipe Kendaraan</label>
+                            <select class="form-select" id="tipe_kendaraan" name="tipe_kendaraan" required>
+                                <option value="">Pilih Tipe</option>
+                                <?php
+                                $queryTipe = "SELECT DISTINCT tipe FROM kendaraan";
+                                $resultTipe = $conn->query($queryTipe);
+                                while ($row = $resultTipe->fetch_assoc()) {
+                                    $tipe = $row['tipe'];
+                                    echo "<option value='$tipe'>$tipe</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
 
- 
+                        <!-- Pilih Model Kendaraan -->
+                        <div class="mb-3">
+                            <label for="kendaraan_id" class="form-label">Model Kendaraan</label>
+                            <select class="form-select" id="kendaraan_id" name="kendaraan_id" required>
+                                <option value="">Pilih Model</option>
+                                <?php
+                                $queryModel = "SELECT * FROM kendaraan";
+                                $resultModel = $conn->query($queryModel);
+                                while ($row = $resultModel->fetch_assoc()) {
+                                    $model = $row['model'];
+                                    $id = $row['kendaraan_id'];
+                                    $harga = $row['harga_per_hari'];
+                                    $tipe = $row['tipe']; // penting!
+                                    echo "<option value='$id' data-harga='$harga' data-tipe='$tipe'>$model</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+
 
                         <!-- Tanggal Rental -->
                         <div class="mb-3">
@@ -90,25 +90,25 @@
 
 <!-- Script untuk tipe dan model -->
 <script>
-document.getElementById('tipe_kendaraan').addEventListener('change', function () {
-    const tipeDipilih = this.value;
-    const modelDropdown = document.getElementById('kendaraan_id');
-    const options = modelDropdown.querySelectorAll('option');
+    document.getElementById('tipe_kendaraan').addEventListener('change', function () {
+        const tipeDipilih = this.value;
+        const modelDropdown = document.getElementById('kendaraan_id');
+        const options = modelDropdown.querySelectorAll('option');
 
-    options.forEach(function(option) {
-        const tipeOption = option.getAttribute('data-tipe');
+        options.forEach(function (option) {
+            const tipeOption = option.getAttribute('data-tipe');
 
-        if (!tipeOption) return; // skip <option>Pilih Model</option>
+            if (!tipeOption) return; // skip <option>Pilih Model</option>
 
-        if (tipeDipilih === "" || tipeOption === tipeDipilih) {
-            option.style.display = 'block';
-        } else {
-            option.style.display = 'none';
-        }
+            if (tipeDipilih === "" || tipeOption === tipeDipilih) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+
+        modelDropdown.value = ""; // reset pilihan model
     });
-
-    modelDropdown.value = ""; // reset pilihan model
-});
 </script>
 
 

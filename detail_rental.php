@@ -33,23 +33,24 @@ $data = mysqli_fetch_assoc($result);
         <li class="list-group-item"><strong>Nama Pelanggan:</strong> <?= htmlspecialchars($data['nama']); ?></li>
         <li class="list-group-item"><strong>NIK:</strong> <?= htmlspecialchars($data['NIK']); ?></li>
         <li class="list-group-item">
-  <strong>Foto SIM:</strong><br>
-  <?php
-    $simPath = 'uploads/' . $data['sim'];
-    if (!empty($data['sim']) && file_exists($simPath)): ?>
-      <a href="<?= $simPath; ?>" target="_blank">
-        <img src="<?= $simPath; ?>" alt="Foto SIM" class="img-thumbnail mt-2" style="max-width: 300px;">
-      </a>
-      <p class="text-muted mt-1">Klik gambar untuk memperbesar.</p>
-  <?php else: ?>
-      <p class="text-muted">Tidak ada foto SIM.</p>
-  <?php endif; ?>
-</li>
+          <strong>Foto SIM:</strong><br>
+          <?php
+          $simPath = 'uploads/' . $data['sim'];
+          if (!empty($data['sim']) && file_exists($simPath)): ?>
+            <a href="<?= $simPath; ?>" target="_blank">
+              <img src="<?= $simPath; ?>" alt="Foto SIM" class="img-thumbnail mt-2" style="max-width: 300px;">
+            </a>
+            <p class="text-muted mt-1">Klik gambar untuk memperbesar.</p>
+          <?php else: ?>
+            <p class="text-muted">Tidak ada foto SIM.</p>
+          <?php endif; ?>
+        </li>
 
         <li class="list-group-item"><strong>Kendaraan:</strong> <?= $data['tipe'] . ' - ' . $data['model']; ?></li>
         <li class="list-group-item"><strong>Tanggal Rental:</strong> <?= $data['tgl_rental']; ?></li>
         <li class="list-group-item"><strong>Tanggal Kembali:</strong> <?= $data['tgl_kembali']; ?></li>
-        <li class="list-group-item"><strong>Total Harga:</strong> Rp <?= number_format($data['total'], 0, ',', '.'); ?></li>
+        <li class="list-group-item"><strong>Total Harga:</strong> Rp <?= number_format($data['total'], 0, ',', '.'); ?>
+        </li>
       </ul>
     </div>
   </div>
