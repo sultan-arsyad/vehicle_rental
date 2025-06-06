@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Bulan Mei 2025 pada 13.35
+-- Waktu pembuatan: 05 Jun 2025 pada 16.08
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -39,10 +39,8 @@ CREATE TABLE `kendaraan` (
 --
 
 INSERT INTO `kendaraan` (`kendaraan_id`, `tipe`, `model`, `harga_per_hari`) VALUES
-(2, 'Motor', 'Honda Beat', 100000),
-(3, 'Mobil', 'Mitsubishi Xpander', 500000),
-(4, 'Motor', 'Suzuki Satria', 400000),
-(5, 'Mobil', 'Honda Brio', 200000);
+(9, 'Motor', 'Honda Beat', 1000000),
+(10, 'Mobil', 'Toyota Avanza', 100000);
 
 -- --------------------------------------------------------
 
@@ -52,21 +50,22 @@ INSERT INTO `kendaraan` (`kendaraan_id`, `tipe`, `model`, `harga_per_hari`) VALU
 
 CREATE TABLE `pelanggan` (
   `pelanggan_id` int(11) NOT NULL,
+  `NIK` int(255) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `nomor_lisensi` varchar(20) NOT NULL
+  `sim` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `pelanggan`
 --
 
-INSERT INTO `pelanggan` (`pelanggan_id`, `nama`, `nomor_lisensi`) VALUES
-(1, '', ''),
-(2, '', ''),
-(3, '', ''),
-(4, '', ''),
-(5, '', ''),
-(6, '', '');
+INSERT INTO `pelanggan` (`pelanggan_id`, `NIK`, `nama`, `sim`) VALUES
+(16, 1234567, 'tes', 'uploads/sim/1749125158_LOGOUT.png'),
+(17, 1234567, 'abing', 'uploads/sim/1749125263_LOGOUT.png'),
+(19, 1234567, 'tes 1', 'uploads/sim/1749126059_LOGOUT.png'),
+(21, 0, '', NULL),
+(22, 0, '', NULL),
+(23, 111111, 'tes', 'uploads/sim/1749130948_Cuplikan layar 2024-09-24 104504.png');
 
 -- --------------------------------------------------------
 
@@ -80,8 +79,20 @@ CREATE TABLE `rental` (
   `pelanggan_id` int(11) DEFAULT NULL,
   `tgl_rental` date DEFAULT NULL,
   `tgl_kembali` date DEFAULT NULL,
-  `total` int(11) DEFAULT NULL
+  `total` int(11) DEFAULT NULL,
+  `IMAGE` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `rental`
+--
+
+INSERT INTO `rental` (`rental_id`, `kendaraan_id`, `pelanggan_id`, `tgl_rental`, `tgl_kembali`, `total`, `IMAGE`) VALUES
+(12, 10, 21, '2025-06-05', '2025-06-06', 100000, NULL),
+(13, 10, 22, '2025-06-06', '2025-06-07', 100000, NULL),
+(14, 10, 17, '2025-06-05', '2025-06-07', 200000, NULL),
+(15, 9, 23, '2025-06-05', '2025-06-06', 1000000, NULL),
+(16, 10, 23, '2025-06-05', '2025-06-06', 100000, NULL);
 
 -- --------------------------------------------------------
 
@@ -111,7 +122,14 @@ INSERT INTO `users` (`user_id`, `username`, `name`, `password`, `role`) VALUES
 (7, 'a', 'a', '$2y$10$VbDMtgmDs0ObUSTeDtDBNetEeU1KZ86b27C7/8JmK/8CU0HdpBPum', 'user'),
 (8, 'nabil', 'a', '$2y$10$oA1Ppl7TR30WZv0BX58lBusXD0gh8zGQ5ategO2PhLYJwFGbZIYS6', 'user'),
 (9, 'u', 'a', '$2y$10$jWAL1KoKcS3mDy.Gsw3QVuM9gI6.zbni/AMDZvOg/k5ZQAa5TZP.W', 'user'),
-(10, 'p', 'a', '$2y$10$dHMY2fq7WgPzja9UmDyJp.LILln7slXGtvwrCMewrM8vV94F0Ra3G', 'user');
+(10, 'p', 'a', '$2y$10$dHMY2fq7WgPzja9UmDyJp.LILln7slXGtvwrCMewrM8vV94F0Ra3G', 'user'),
+(11, 'budi', 'um', '$2y$10$KAaTQ2ISHxh7oJvVKkjIYO95JQYDSQK12ShWiIeFJPSD8JS7SjJli', 'user'),
+(12, 'budi', 'um', '$2y$10$tHqnUy5rBAZj/g5lbtxivuo6w6QU6FDDWnCE5N.sQg0ewM78GEDhy', 'user'),
+(13, 'nn', 'euuui', '$2y$10$Gyd76cvoxtFu6AgQ.FNL4e9hnEkx7XyF6sGIe04FEO9EWmAg9lYfi', 'user'),
+(14, 'umami', 'gob', '$2y$10$h0F/THYRyTB8GVSvedDIIO.wIzpsE/6JV3JA88eYV6UdQirOBfyz6', 'user'),
+(15, 'sami', 'mi', '$2y$10$BNZzQfIFbpWKoRP61XZzGOR0VvFSA4wIuHmEF.bkAyk7eZ9PluTBq', 'user'),
+(16, 'hary', 'hary', '$2y$12$Ar5OhkWBFiYgOZpM493uKekFaCaBqb6ol9AtqlF7TZ4klE.hDI0kG', 'user'),
+(17, 'ayam', 'goreng', '$2y$10$HiLI5ah6BNlwMeK7S.C/z.GHJzXxarMxpYVin2u.nTmaYr5F6d5Cq', 'user');
 
 --
 -- Indexes for dumped tables
@@ -151,25 +169,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `kendaraan`
 --
 ALTER TABLE `kendaraan`
-  MODIFY `kendaraan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `kendaraan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `pelanggan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `pelanggan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT untuk tabel `rental`
 --
 ALTER TABLE `rental`
-  MODIFY `rental_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rental_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
